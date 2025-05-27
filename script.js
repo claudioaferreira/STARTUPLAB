@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
             formData.append(key, data[key]);
         }
         try {
-            const response = await fetch('https://script.google.com/macros/s/AKfycbx7V-Ih9GRYe3gFnv-sdSrzwkKO5Q3VXkeMpK-aAVIGiiyZUU8IT7Quv3S3W18MZoA6EQ/exec', {
+            const response = await fetch('https://script.google.com/macros/s/AKfycbxkfBagDPTEaOIs_N1Ckcw-POv8xFh8wpySF_bdNbsWtDWWE9HorcJsv7vbOCM5hXZKtw/exec', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
