@@ -289,21 +289,6 @@
         </div>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const ideaSelect = document.getElementById('idea');
-            const ideaDescriptionGroup = document.getElementById('idea-description-group');
-
-            if (ideaSelect) {
-                ideaSelect.addEventListener('change', function() {
-                    if (this.value === 'si') {
-                        ideaDescriptionGroup.style.display = 'block';
-                    } else {
-                        ideaDescriptionGroup.style.display = 'none';
-                    }
-                });
-            }
-        });
-    </script>
+    <script src="script.js" defer></script>
 </body>
 </html>
