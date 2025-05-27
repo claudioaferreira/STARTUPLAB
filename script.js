@@ -36,12 +36,13 @@
       try {
         const response = await fetch('https://script.google.com/macros/s/AKfycbxvIZTwpgxTAlXQp8MfQ-2qu2u2SWAuKgB8p8WqTDHwA42_I9z4hFmBZyFx2WwPmmkIbA/exec', {
           method: 'POST',
-          body: JSON.stringify(data),
-          headers: {
+           headers: {
             'Content-Type': 'application/json'
-          }
+          },
+          body: JSON.stringify(data),
+         
         });
-document.querySelector('.registration-form')
+
         const result = await response.json();
 
         if (result.result === "success" || result.status === "success") {
