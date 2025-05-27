@@ -34,7 +34,7 @@
       console.log('Datos a enviar:', data);
 
       try {
-        const response = await fetch('https://script.google.com/macros/s/AKfycbzonX7elN94_wgAu3r2WNXzHdogIJ5sEwQd9aGcCupl4weAi_riJ1iFp4rOUn6ZNc37Iw/exec', {
+        const response = await fetch('https://script.google.com/macros/s/AKfycbxvIZTwpgxTAlXQp8MfQ-2qu2u2SWAuKgB8p8WqTDHwA42_I9z4hFmBZyFx2WwPmmkIbA/exec', {
           method: 'POST',
           body: JSON.stringify(data),
           headers: {
