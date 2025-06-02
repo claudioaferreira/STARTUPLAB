@@ -26,9 +26,9 @@
       text-align: center;
       box-shadow: 0 8px 25px rgba(0,0,0,0.15);
       width: 100%;
-      max-width: 550px;
+      max-width: 450px;
       position: relative;
-      margin-bottom: 20px; /* Espacio para los botones debajo */
+      margin-bottom: 20px;
     }
 
     .credential-logo {
@@ -37,176 +37,134 @@
     }
 
     .main-title {
-      color: #1dbfaf; 
+      color: #1dbfaf;
       font-family: 'Montserrat', sans-serif;
-      font-size: 24px; 
+      font-size: 20px;
       font-weight: 700;
       text-transform: uppercase;
-      margin-top: 0;
-      margin-bottom: 20px;
+      margin: 0 0 15px 0;
     }
 
     .participant-name {
       font-family: 'Montserrat', sans-serif;
-      font-size: 26px;
+      font-size: 22px;
       font-weight: 700;
       color: #222;
-      margin-top: 0;
-      margin-bottom: 25px;
+      margin: 0 0 20px 0;
       line-height: 1.2;
-      word-wrap: break-word;
     }
-    
+
     .info-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 8px; 
-        text-align: left;
-        font-size: 14px;
-        color: #444;
-        margin-bottom: 20px;
-        padding: 15px;
-        background-color: #f9f9f9;
-        border-radius: 8px;
+      text-align: left;
+      font-size: 14px;
+      color: #444;
+      margin-bottom: 20px;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
     }
 
     .info-grid p {
-        margin: 6px 0;
-        word-wrap: break-word;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 6px;
-    }
-    .info-grid p:last-child {
-        border-bottom: none;
+      margin: 6px 0;
+      word-wrap: break-word;
     }
 
     .info-grid strong {
-        color: #111;
-        min-width: 120px;
-        display: inline-block;
-        margin-right: 5px;
+      color: #111;
+      display: inline-block;
+      width: 100px;
     }
 
     .qr-section {
-      margin-top: 20px;
-      margin-bottom: 25px;
+      margin-top: 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
-    }
-    
-    .qr-section p {
-        font-size: 13px;
-        color: #555;
-        margin:0;
     }
 
     .qr-section img {
-      width: 130px; 
-      height: 130px;
+      width: 120px;
+      height: 120px;
       border: 1px solid #ddd;
       padding: 4px;
       background-color: #fff;
     }
 
-    .action-buttons { /* Contenedor para los botones */
-        display: flex;
-        flex-direction: column; /* Apilar botones verticalmente en móviles */
-        align-items: center;
-        gap: 15px; /* Espacio entre botones */
-        margin-top: 10px; /* Reducido porque el contenedor principal ya tiene margin-bottom */
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
     }
 
-    .action-buttons button { /* Estilo base para ambos botones */
-      padding: 12px 25px; /* Padding ligeramente ajustado */
-      font-size: 16px;
+    .action-buttons button {
+      padding: 10px 20px;
+      font-size: 15px;
       font-weight: 500;
       color: #fff;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-      width: auto; /* Ancho automático basado en contenido */
-      min-width: 220px; /* Ancho mínimo para consistencia */
-    }
-    
-    .action-buttons button:hover {
-      transform: translateY(-2px);
+      transition: background-color 0.3s ease;
+      min-width: 200px;
     }
 
-    .download-button { /* Estilo específico para el botón de descarga */
-      background-color: #1dbfaf; 
-      box-shadow: 0 4px 10px rgba(29, 191, 175, 0.4);
+    .download-button {
+      background-color: #1dbfaf;
     }
+
     .download-button:hover {
-      background-color: #18a08f; 
+      background-color: #159f91;
     }
 
-    .certificate-link-button { /* Estilo para el botón de ir al certificado */
-      background-color: #5c6bc0; /* Un color diferente, por ejemplo, un índigo */
-      box-shadow: 0 4px 10px rgba(92, 107, 192, 0.4);
+    .certificate-link-button {
+      background-color: #5c6bc0;
     }
+
     .certificate-link-button:hover {
-      background-color: #4e5aa4; 
+      background-color: #4455a5;
     }
 
+    @media (min-width: 500px) {
+      .action-buttons {
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
 
     .na-value {
-        font-style: italic;
-        color: #888;
+      font-style: italic;
+      color: #888;
     }
-
-    /* Media query para botones lado a lado en pantallas más grandes */
-    @media (min-width: 500px) {
-        .action-buttons {
-            flex-direction: row; /* Botones lado a lado */
-            justify-content: center;
-        }
-    }
-
   </style>
 </head>
 <body>
 
   <div class="credential-showcase" id="credentialToDownload">
     <img src="/img/LOGO.png" alt="Logo del Evento" class="credential-logo" />
-    <h1 class="main-title">Credencial del Participante</h1>
+    <h1 class="main-title">Credencial de Participante</h1>
     <p class="participant-name"><span id="nombre">[Nombre del Participante]</span></p>
 
     <div class="info-grid">
       <p><strong>Cédula:</strong> <span id="cedula"></span></p>
-      <p><strong>Correo:</strong> <span id="email"></span></p>
-      <p><strong>Teléfono:</strong> <span id="telefono"></span></p>
       <p><strong>Carrera:</strong> <span id="carrera"></span></p>
-      <p><strong>Edad:</strong> <span id="edad"></span></p>
-      <p><strong>GitHub/Portafolio:</strong> <span id="github"></span></p>
-      <p><strong>Idea de Negocio:</strong> <span id="idea"></span></p>
-      <p><strong>Descripción Idea:</strong> <span id="idea_descripcion"></span></p>
       <p><strong>Perfil:</strong> <span id="perfil"></span></p>
     </div>
-    
+
     <div class="qr-section">
-        <p>Escanea para más detalles:</p>
-        <img id="qr" src="" alt="Código QR Identificativo" />
+      <img id="qr" src="" alt="Código QR Identificativo" />
     </div>
   </div>
 
   <div class="action-buttons">
-    <button class="download-button" onclick="descargarCredencial()">Descargar mi Credencial</button>
-    <button class="certificate-link-button" onclick="irACertificado()">Ver mi Certificado</button>
+    <button class="download-button" onclick="descargarCredencial()">Descargar Credencial</button>
+    <button class="certificate-link-button" onclick="irACertificado()">Ver Certificado</button>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script>
-    // params ya está disponible globalmente en este script
     const params = new URLSearchParams(window.location.search);
-
-    const fields = [
-      'nombre', 'cedula', 'email', 'telefono', 
-      'carrera', 'edad', 'github', 'idea', 
-      'idea_descripcion', 'perfil'
-    ];
+    const fields = ['nombre', 'cedula', 'carrera', 'perfil'];
 
     fields.forEach(fieldId => {
       const el = document.getElementById(fieldId);
@@ -214,62 +172,46 @@
         let value = params.get(fieldId);
         if (!value || value.trim() === '') {
           value = 'N/A';
-          el.classList.add('na-value'); 
+          el.classList.add('na-value');
         } else {
           el.classList.remove('na-value');
         }
         el.textContent = value;
       }
     });
-    
-    let qrTextParts = [];
-    fields.forEach(fieldId => {
-        const value = params.get(fieldId) || 'N/A';
-        let label = fieldId.charAt(0).toUpperCase() + fieldId.slice(1);
-        if (fieldId === "idea_descripcion") label = "Descripción Idea";
-        else if (fieldId === "github") label = "GitHub/Portafolio";
-        qrTextParts.push(`${label}: ${value}`);
-    });
-    const qrText = qrTextParts.join('; ').trim();
+
+    const qrText = fields.map(fieldId => {
+      const label = fieldId.charAt(0).toUpperCase() + fieldId.slice(1);
+      const value = params.get(fieldId) || 'N/A';
+      return `${label}: ${value}`;
+    }).join('; ');
 
     if (qrText) {
       const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(qrText)}&margin=1`;
       document.getElementById('qr').src = qrUrl;
       document.getElementById('qr').alt = `QR para ${params.get('nombre') || 'participante'}`;
-    } else {
-      document.getElementById('qr').alt = "No hay datos para generar QR";
     }
-    
-    function descargarCredencial() {
-      const credentialElement = document.getElementById('credentialToDownload');
-      const actionButtonsContainer = document.querySelector('.action-buttons');
-      
-      actionButtonsContainer.style.display = 'none';
 
-      html2canvas(credentialElement, {
-        scale: 2, 
-        useCORS: true,
-      }).then(canvas => {
-        const enlace = document.createElement('a');
-        const nombreParticipante = params.get('nombre') || 'participante';
-        enlace.download = `Credencial_${nombreParticipante.replace(/\s+/g, '_')}.png`;
-        enlace.href = canvas.toDataURL('image/png');
-        enlace.click();
-        
-        actionButtonsContainer.style.display = 'flex'; // Restaurar display original
+    function descargarCredencial() {
+      const element = document.getElementById('credentialToDownload');
+      const buttons = document.querySelector('.action-buttons');
+      buttons.style.display = 'none';
+
+      html2canvas(element, { scale: 2, useCORS: true }).then(canvas => {
+        const link = document.createElement('a');
+        const name = params.get('nombre') || 'participante';
+        link.download = `Credencial_${name.replace(/\s+/g, '_')}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        buttons.style.display = 'flex';
       }).catch(err => {
-        console.error("Error al generar la imagen de la credencial:", err);
-        actionButtonsContainer.style.display = 'flex';
+        console.error("Error generando imagen:", err);
+        buttons.style.display = 'flex';
       });
     }
 
-    // NUEVA FUNCIÓN PARA IR AL CERTIFICADO
     function irACertificado() {
-      // Los 'params' ya contienen todos los parámetros URL de la página actual
       const queryString = params.toString();
-      
-      // Construir la URL para certificado.html
-      // Asegúrate de que 'certificado.html' esté en la misma ruta o ajusta la URL
       window.location.href = `certificado.html?${queryString}`;
     }
   </script>
