@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso Interactivo: APIs con Node.js y Express</title>
+    <style>
+        :root {
+            --primary-color: #007bff; /* Azul vibrante */
+            --secondary-color: #6c757d; /* Gris secundario */
+            --background-color: #f8f9fa; /* Fondo claro */
+            --text-color: #333; /* Texto principal oscuro */
+            --light-text-color: #fff; /* Texto claro para fondos oscuros */
+            --code-bg-color: #282c34; /* Fondo oscuro para código */
+            --code-text-color: #abb2bf; /* Texto claro para código */
+            --warning-bg-color: #fff3cd; /* Fondo advertencia */
+            --warning-text-color: #856404; /* Texto advertencia */
+            --warning-border-color: #ffeeba; /* Borde advertencia */
+            --success-bg-color: #d4edda; /* Fondo éxito/tip */
+            --success-text-color: #155724; /* Texto éxito/tip */
+            --success-border-color: #c3e6cb; /* Borde éxito/tip */
+            --border-radius: 8px;
+            --box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .course-container {
+            background-color: #fff;
+            width: 100%;
+            max-width: 800px;
+            margin: 20px;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+            padding: 20px;
+            text-align: center;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8em;
+        }
+
+        .step {
+            display: none; /* Ocultar todos los pasos por defecto */
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .step:last-child {
+            border-bottom: none;
+        }
+
+        .step.active {
+            display: block; /* Mostrar el paso activo */
+        }
+
+        .step h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+
+        .step p, .step ul {
+            margin-bottom: 15px;
+            font-size: 1em;
+        }
+        
+        .step li {
+            margin-bottom: 8px;
+        }
+
+        .icon {
+            margin-right: 10px;
+            font-size: 1.2em;
+            color: var(--primary-color);
+        }
+
+        .code-block {
+            background-color: var(--code-bg-color);
+            color: var(--code-text-color);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+        }
+
+        .code-block pre {
+            margin: 0;
+        }
+
+        .warning, .tip {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+            border-left: 5px solid;
+        }
+
+        .warning {
+            background-color: var(--warning-bg-color);
+            color: var(--warning-text-color);
+            border-color: var(--warning-border-color);
+        }
+
+        .tip {
+            background-color: var(--success-bg-color);
+            color: var(--success-text-color);
+            border-color: var(--success-border-color);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .nav-button {
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background-color: #0056b3; /* Azul más oscuro al pasar el mouse */
+        }
+
+        .nav-button:disabled {
+            background-color: var(--secondary-color);
+            cursor: not-allowed;
+        }
+
+        .summary-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .summary-list li {
+            padding: 8px 0;
+            border-bottom: 1px dotted #ccc;
+        }
+        .summary-list li:last-child {
+            border-bottom: none;
+        }
+        .summary-list .icon {
+            color: var(--success-text-color);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.5em;
+            }
+            .step h2 {
+                font-size: 1.3em;
+            }
+            .nav-button {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+            .course-container {
+                margin: 10px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="course-container">
+        <header>
+            <h1>🚀 Aprende a Crear APIs con Node.js y Express</h1>
+        </header>
+
+        <main id="course-content">
+            <!-- Paso 0: Introducción -->
+            <section class="step active" id="step-0">
+                <h2><span class="icon">👋</span>¡Bienvenida/o al Curso!</h2>
+                <p>¡Hola! En este curso, vamos a aprender juntos cómo construir "APIs". Imagina que una API es como un camarero en un restaurante.</p>
+                <ul>
+                    <li>Tú (el cliente o una app) le pides algo al camarero (la API).</li>
+                    <li>El camarero va a la cocina (el servidor) y le dice al chef (Node.js con Express) qué preparar.</li>
+                    <li>El chef prepara el plato (los datos).</li>
+                    <li>El camarero te trae el plato (la API te devuelve los datos).</li>
+                </ul>
+                <p>Usaremos <strong>Node.js</strong> (que es como un motor mágico que entiende JavaScript fuera del navegador) y <strong>Express</strong> (que es un conjunto de herramientas que hace más fácil construir estas APIs en Node.js).</p>
+                <p>¡No necesitas saber nada de antes! Te guiaré paso a paso. ¡Empecemos!</p>
+            </section>
+
+            <!-- Paso 1: ¿Qué necesitas? (Instalación) -->
+            <section class="step" id="step-1">
+                <h2><span class="icon">🛠️</span>Paso 1: Preparamos las Herramientas</h2>
+                <p>Antes de cocinar, necesitamos los ingredientes y utensilios. Para nosotros, son Node.js y npm.</p>
+                <p><strong>Node.js:</strong> Es como el horno y la estufa de nuestra cocina. Permite que nuestro código JavaScript funcione en nuestro ordenador, no solo en un navegador web.</p>
+                <p><strong>npm (Node Package Manager):</strong> Viene con Node.js. Es como una despensa gigante llena de "paquetes" o herramientas listas para usar que otros programadores han creado. Usaremos npm para conseguir Express.</p>
+                
+                <p><strong>¿Cómo saber si los tienes?</strong></p>
+                <ol>
+                    <li>Abre la "terminal" o "consola" de tu ordenador.
+                        <ul>
+                            <li>En Windows: Busca "cmd" o "PowerShell".</li>
+                            <li>En Mac: Busca "Terminal".</li>
+                            <li>En Linux: Normalmente Ctrl+Alt+T.</li>
+                        </ul>
+                    </li>
+                    <li>Escribe `node -v` y presiona Enter. Si ves un número (ej: `v18.12.0`), ¡genial, tienes Node.js!</li>
+                    <li>Escribe `npm -v` y presiona Enter. Si ves un número (ej: `9.8.1`), ¡tienes npm!</li>
+                </ol>
+                <div class="tip">
+                    <p><span class="icon">💡</span><strong>Consejo:</strong> Si no los tienes instalados, visita <a href="https://nodejs.org/" target="_blank">nodejs.org</a> y descarga la versión LTS (Recomendada para la mayoría de usuarios). La instalación es sencilla, ¡como instalar cualquier otro programa!</p>
+                </div>
+            </section>
+
+            <!-- Paso 2: Crear el Proyecto -->
+            <section class="step" id="step-2">
+                <h2><span class="icon">📁</span>Paso 2: Creamos Nuestro Espacio de Trabajo</h2>
+                <p>Imagina que vamos a construir una casa de LEGO. Primero, necesitamos una base y una caja para guardar las piezas.</p>
+                <ol>
+                    <li><strong>Crea una carpeta:</strong> En tu ordenador, crea una nueva carpeta para nuestro proyecto. Llámala como quieras, por ejemplo, `mi-primera-api`.</li>
+                    <li><strong>Entra en la carpeta:</strong> Usa la terminal que abriste antes. Si creaste la carpeta en tu Escritorio, podrías escribir algo como `cd Desktop/mi-primera-api` (el comando `cd` significa "cambiar directorio").</li>
+                    <li><strong>Prepara la "caja" (package.json):</strong> Una vez dentro de la carpeta en la terminal, escribe el siguiente comando y presiona Enter:
+                        <div class="code-block"><pre>npm init -y</pre></div>
+                        Esto crea un archivo llamado `package.json`. Este archivo es como la etiqueta de nuestra caja de LEGO: dice qué hay dentro, el nombre del proyecto, etc. La parte `-y` hace que acepte todas las opciones por defecto, ¡así es más rápido!
+                    </li>
+                </ol>
+                <div class="tip">
+                    <p><span class="icon">💡</span><strong>¿Qué es `package.json`?</strong> Es un archivo que guarda información sobre tu proyecto y las "herramientas" (paquetes) que usa. ¡Es muy importante!</p>
+                </div>
+            </section>
+
+            <!-- Paso 3: Instalar Express -->
+            <section class="step" id="step-3">
+                <h2><span class="icon">📦</span>Paso 3: Conseguimos Express, Nuestro Ayudante Principal</h2>
+                <p>Express es una herramienta (un paquete de npm) que nos facilita mucho la vida al crear APIs. Es como un chef asistente muy organizado.</p>
+                <p>Para "instalar" Express en nuestro proyecto (meterlo en nuestra caja de LEGO), asegúrate de estar en la carpeta del proyecto en la terminal y escribe:</p>
+                <div class="code-block"><pre>npm install express</pre></div>
+                <p>Presiona Enter. Verás que la terminal hace algunas cosas. Cuando termine:</p>
+                <ul>
+                    <li>Se creará una carpeta llamada `node_modules`. Aquí es donde npm guarda Express y otras herramientas que podríamos necesitar. ¡No toques esta carpeta directamente!</li>
+                    <li>Tu archivo `package.json` se actualizará para mostrar que Express es ahora parte de tu proyecto.</li>
+                </ul>
+                <div class="warning">
+                    <p><span class="icon">⚠️</span><strong>¡Ojo!</strong> Debes tener conexión a internet para que `npm install` funcione, ya que descarga el paquete desde la "despensa" online de npm.</p>
+                </div>
+            </section>
+
+            <!-- Paso 4: Nuestro Primer Servidor -->
+            <section class="step" id="step-4">
+                <h2><span class="icon">🏠</span>Paso 4: Construimos la "Casa" de Nuestra API</h2>
+                <p>Ahora vamos a escribir nuestro primer programa Node.js con Express. Este programa será el "servidor", la cocina donde se prepararán las respuestas de nuestra API.</p>
+                <ol>
+                    <li><strong>Crea un archivo:</strong> En tu carpeta del proyecto (ej: `mi-primera-api`), crea un nuevo archivo de texto. Llámalo `index.js` (o `app.js`, es un nombre común).</li>
+                    <li><strong>Escribe el código:</strong> Abre `index.js` con un editor de texto simple (como Bloc de Notas en Windows, TextEdit en Mac, o mejor aún, un editor de código como VS Code) y escribe lo siguiente:</li>
+                </ol>
+                <div class="code-block">
+<pre>
+// 1. "Importamos" Express, como sacar el ingrediente de la caja.
+const express = require('express');
+
+// 2. Creamos nuestra "aplicación" Express. Es como preparar la mesa de trabajo.
+const app = express();
+
+// 3. Elegimos un "puerto". Imagina que es el número de la puerta de nuestra casa.
+const port = 3000;
+
+// 4. Le decimos a nuestra app que "escuche" en esa puerta.
+// Cuando alguien llame a la puerta 3000, nuestra app estará lista.
+app.listen(port, () => {
+  console.log(`¡Servidor escuchando en http://localhost:${port}! 🎉`);
+});
+</pre>
+                </div>
+                <p><strong>Explicación sencilla:</strong></p>
+                <ul>
+                    <li>`require('express')`: Le decimos a Node.js que queremos usar la herramienta Express.</li>
+                    <li>`const app = express()`: Creamos una "instancia" de Express, que será nuestra aplicación principal.</li>
+                    <li>`const port = 3000`: Definimos un número de "puerto". Los ordenadores usan puertos para que diferentes programas puedan comunicarse por la red sin mezclarse. El 3000 es común para desarrollo.</li>
+                    <li>`app.listen(...)`: Iniciamos el servidor. Estará "escuchando" peticiones que lleguen al puerto 3000. El mensaje en `console.log` aparecerá en tu terminal cuando el servidor se inicie correctamente.</li>
+                </ul>
+            </section>
+
+            <!-- Paso 5: Encender el Servidor -->
+            <section class="step" id="step-5">
+                <h2><span class="icon">🔌</span>Paso 5: ¡Encendemos Nuestra API!</h2>
+                <p>Ya tenemos el código base de nuestro servidor. ¡Es hora de ponerlo en marcha!</p>
+                <ol>
+                    <li>Asegúrate de estar en la carpeta de tu proyecto (`mi-primera-api`) en la terminal.</li>
+                    <li>Escribe el siguiente comando y presiona Enter:
+                        <div class="code-block"><pre>node index.js</pre></div>
+                        (Si llamaste a tu archivo `app.js`, entonces sería `node app.js`).
+                    </li>
+                    <li>Si todo va bien, deberías ver en tu terminal el mensaje: `¡Servidor escuchando en http://localhost:3000! 🎉`</li>
+                </ol>
+                <p>¡Felicidades! Tu servidor está funcionando. Aunque todavía no hace mucho, ¡ya es un gran paso!</p>
+                <div class="tip">
+                    <p><span class="icon">💡</span><strong>¿Qué es `localhost`?</strong> Es un nombre especial que siempre se refiere a tu propio ordenador. Así que `http://localhost:3000` significa "la aplicación que está en mi ordenador, en la puerta número 3000".</p>
+                </div>
+                <div class="warning">
+                    <p><span class="icon">⚠️</span><strong>¡Importante!</strong> Mientras el servidor esté corriendo, tu terminal estará "ocupada". Para detener el servidor, ve a la ventana de la terminal y presiona `Ctrl + C`.</p>
+                </div>
+            </section>
+            
+            <!-- Paso 6: Nuestra Primera Ruta - ¡Hola Mundo! -->
+            <section class="step" id="step-6">
+                <h2><span class="icon">🛣️</span>Paso 6: La Primera "Ruta" - Un Saludo Amistoso</h2>
+                <p>Una "ruta" en una API es como una dirección específica a la que alguien puede ir para obtener algo. Vamos a crear una ruta que simplemente diga "¡Hola desde mi API!".</p>
+                <p>Modifica tu archivo `index.js` (o `app.js`). Detén el servidor (`Ctrl + C` en la terminal) si estaba corriendo, y añade estas líneas <strong>antes</strong> de `app.listen(...)`:</p>
+                <div class="code-block">
+<pre>
+// ... (el código anterior de require, app, port) ...
+
+// Esta es nuestra primera ruta.
+// Cuando alguien visite la dirección principal ("/") de nuestra API...
+app.get('/', (req, res) => {
+  // ...le enviaremos una respuesta.
+  res.send('¡Hola desde mi API!');
+});
+
+// ... (el código de app.listen(...) va después) ...
+</pre>
+                </div>
+                <p><strong>Explicación:</strong></p>
+                <ul>
+                    <li>`app.get(...)`: Le decimos a Express: "Cuando alguien haga una petición de tipo 'GET'..." (GET es el tipo de petición que hace tu navegador cuando escribes una dirección y le das a Enter).</li>
+                    <li>`'/'`: "...a la dirección raíz (la principal, sin nada más después del número de puerto)..."</li>
+                    <li>`(req, res) => { ... }`: "...ejecuta esta función." Esta función recibe dos objetos importantes:
+                        <ul>
+                            <li>`req` (request / petición): Información sobre lo que el cliente está pidiendo.</li>
+                            <li>`res` (response / respuesta): Herramientas para enviar una respuesta de vuelta al cliente.</li>
+                        </ul>
+                    </li>
+                    <li>`res.send('¡Hola desde mi API!')`: Usamos `res.send()` para enviar el texto "¡Hola desde mi API!" como respuesta.</li>
+                </ul>
+                <p><strong>¡A probarlo!</strong></p>
+                <ol>
+                    <li>Guarda los cambios en `index.js`.</li>
+                    <li>Vuelve a la terminal y ejecuta `node index.js` para iniciar el servidor.</li>
+                    <li>Abre tu navegador web (Chrome, Firefox, etc.) y ve a la dirección: `http://localhost:3000`</li>
+                    <li>¡Deberías ver el mensaje "¡Hola desde mi API!" en tu navegador!</li>
+                </ol>
+            </section>
+
+            <!-- Paso 7: Enviando Datos Reales (JSON) -->
+            <section class="step" id="step-7">
+                <h2><span class="icon">📊</span>Paso 7: Enviando Datos de Verdad (JSON)</h2>
+                <p>Las APIs normalmente no envían solo texto simple. Envían datos estructurados. El formato más común para esto es JSON (JavaScript Object Notation).</p>
+                <p>JSON es como una lista de compras o una descripción detallada de algo, escrita de una forma que los ordenadores entienden fácilmente. Se parece mucho a los objetos de JavaScript.</p>
+                <p>Vamos a crear una nueva ruta que devuelva datos en formato JSON. Añade esto a tu `index.js`, debajo de la ruta anterior y antes de `app.listen(...)`:</p>
+                <div class="code-block">
+<pre>
+// ... (código anterior y la ruta '/') ...
+
+// Nueva ruta para enviar datos JSON
+app.get('/api/datos', (req, res) => {
+  const misDatos = {
+    mensaje: "Aquí tienes algunos datos",
+    autor: "Tu Nombre",
+    items: [
+      { id: 1, nombre: "Manzana", color: "Roja" },
+      { id: 2, nombre: "Banana", color: "Amarilla" }
+    ]
+  };
+  res.json(misDatos); // ¡Importante! Usamos res.json()
+});
+
+// ... (el código de app.listen(...) va después) ...
+</pre>
+                </div>
+                <p><strong>Explicación:</strong></p>
+                <ul>
+                    <li>`app.get('/api/datos', ...)`: Creamos una nueva ruta en `/api/datos`. Es buena práctica poner `/api/` delante de las rutas que devuelven datos.</li>
+                    <li>`const misDatos = { ... }`: Creamos un objeto JavaScript con la información que queremos enviar.</li>
+                    <li>`res.json(misDatos)`: Usamos `res.json()` en lugar de `res.send()`. Esto le dice a Express que convierta nuestro objeto `misDatos` a formato JSON y lo envíe con las cabeceras correctas para que el navegador (o cualquier cliente) sepa que es JSON.</li>
+                </ul>
+                <p><strong>¡A probarlo!</strong></p>
+                <ol>
+                    <li>Guarda los cambios, detén el servidor (`Ctrl + C`) y reinícialo (`node index.js`).</li>
+                    <li>En tu navegador, ve a: `http://localhost:3000/api/datos`</li>
+                    <li>¡Verás los datos en formato JSON! Algunos navegadores lo muestran formateado y bonito.</li>
+                </ol>
+            </section>
+            
+            <!-- Paso 8: Parámetros en la Ruta -->
+            <section class="step" id="step-8">
+                <h2><span class="icon">🆔</span>Paso 8: Rutas con "Partes Variables" (Parámetros)</h2>
+                <p>A veces, queremos que una parte de la ruta sea variable. Por ejemplo, si tenemos una API de usuarios, podríamos querer obtener un usuario específico por su ID: `/api/usuarios/1` o `/api/usuarios/27`.</p>
+                <p>Esa parte variable (el ID del usuario) se llama "parámetro de ruta".</p>
+                <p>Añade esto a tu `index.js`:</p>
+                <div class="code-block">
+<pre>
+// ... (código anterior y otras rutas) ...
+
+// Ruta con un parámetro llamado 'id'
+app.get('/api/saludo/:nombre', (req, res) => {
+  // Express pone los parámetros de ruta en req.params
+  const nombreRecibido = req.params.nombre; 
+  res.send(`¡Hola, ${nombreRecibido}! Gracias por visitar.`);
+});
+
+// ... (el código de app.listen(...) va después) ...
+</pre>
+                </div>
+                <p><strong>Explicación:</strong></p>
+                <ul>
+                    <li>`'/api/saludo/:nombre'`: La parte `:nombre` le dice a Express: "Lo que venga aquí, guárdalo como un parámetro llamado 'nombre'".</li>
+                    <li>`req.params.nombre`: Dentro de la función, podemos acceder al valor de ese parámetro usando `req.params` seguido del nombre que le dimos (en este caso, `nombre`).</li>
+                </ul>
+                <p><strong>¡A probarlo!</strong></p>
+                <ol>
+                    <li>Guarda, detén y reinicia el servidor.</li>
+                    <li>En tu navegador, prueba estas direcciones:
+                        <ul>
+                            <li>`http://localhost:3000/api/saludo/Ana`</li>
+                            <li>`http://localhost:3000/api/saludo/Carlos`</li>
+                            <li>`http://localhost:3000/api/saludo/MascotaFeliz`</li>
+                        </ul>
+                    </li>
+                    <li>¡Verás cómo el saludo cambia según el nombre que pongas en la URL!</li>
+                </ol>
+                <div class="tip">
+                    <p><span class="icon">💡</span><strong>¡Puedes tener varios parámetros!</strong> Por ejemplo: `/api/productos/:categoria/:idProducto`.</p>
+                </div>
+            </section>
+
+            <!-- Paso 9: ¿Qué Sigue? -->
+            <section class="step" id="step-9">
+                <h2><span class="icon">🚀</span>Paso 9: ¡Has Creado tu Primera API! ¿Y Ahora Qué?</h2>
+                <p>¡Felicidades! Has aprendido los fundamentos para crear APIs con Node.js y Express. Has visto cómo:</p>
+                <ul>
+                    <li>Configurar un proyecto Node.js.</li>
+                    <li>Instalar y usar Express.</li>
+                    <li>Crear un servidor básico.</li>
+                    <li>Definir rutas para peticiones GET.</li>
+                    <li>Enviar respuestas de texto y JSON.</li>
+                    <li>Usar parámetros en las rutas.</li>
+                </ul>
+                <p>Esto es solo el comienzo. El mundo de las APIs es vasto y emocionante. Aquí tienes algunas ideas de lo que podrías aprender después:</p>
+                <ul>
+                    <li><strong>Peticiones POST, PUT, DELETE:</strong> Para crear, actualizar y borrar datos (no solo obtenerlos).</li>
+                    <li><strong>Middleware:</strong> Funciones que se ejecutan entre la petición y la respuesta (útil para validación, logs, etc.).</li>
+                    <li><strong>Conexión a Bases de Datos:</strong> Para guardar y recuperar datos de forma persistente (MongoDB, PostgreSQL, MySQL).</li>
+                    <li><strong>Autenticación y Autorización:</strong> Para proteger tus APIs y controlar quién puede acceder a qué.</li>
+                    <li><strong>Manejo de Errores Avanzado:</strong> Para dar respuestas más útiles cuando algo sale mal.</li>
+                    <li><strong>Testing:</strong> Para asegurar que tu API funciona como esperas.</li>
+                    <li><strong>Despliegue (Deployment):</strong> Para poner tu API en internet y que otros puedan usarla.</li>
+                </ul>
+                <p>¡Sigue practicando y construyendo! La mejor forma de aprender es haciendo.</p>
+                <div class="tip">
+                    <p><span class="icon">💡</span><strong>Recursos Útiles:</strong> Documentación oficial de <a href="https://expressjs.com/es/" target="_blank">Express</a>, <a href="https://nodejs.org/es/docs/" target="_blank">Node.js</a>, y muchos tutoriales en sitios como MDN Web Docs, freeCodeCamp, etc.</p>
+                </div>
+            </section>
+
+            <!-- Resumen Final -->
+            <section class="step" id="step-10">
+                <h2><span class="icon">📝</span>Resumen Final: Pasos Clave</h2>
+                <p>Aquí tienes un recordatorio rápido de los pasos más importantes que hemos seguido:</p>
+                <ul class="summary-list">
+                    <li><span class="icon">✅</span> <strong>Instalar Node.js y npm:</strong> Verifica con `node -v` y `npm -v`.</li>
+                    <li><span class="icon">✅</span> <strong>Crear Carpeta y `npm init -y`:</strong> Para iniciar tu proyecto.</li>
+                    <li><span class="icon">✅</span> <strong>Instalar Express:</strong> Con `npm install express`.</li>
+                    <li><span class="icon">✅</span> <strong>Crear archivo principal (ej: `index.js`):</strong>
+                        <div class="code-block"><pre>
+const express = require('express');
+const app = express();
+const port = 3000; // o el puerto que elijas
+
+// Aquí van tus rutas (app.get, app.post, etc.)
+// Ejemplo: app.get('/', (req, res) => res.send('Hola!'));
+
+app.listen(port, () => {
+  console.log(`Servidor en http://localhost:${port}`);
+});</pre></div>
+                    </li>
+                    <li><span class="icon">✅</span> <strong>Ejecutar el servidor:</strong> Con `node index.js` en la terminal.</li>
+                    <li><span class="icon">✅</span> <strong>Definir Rutas (`app.get`, `app.post`, etc.):</strong>
+                        <ul>
+                            <li>Para texto plano: `res.send('Tu texto')`</li>
+                            <li>Para JSON: `res.json({ objeto: 'valor' })`</li>
+                            <li>Con parámetros: `app.get('/ruta/:param', (req, res) => { ... req.params.param ... })`</li>
+                        </ul>
+                    </li>
+                    <li><span class="icon">✅</span> <strong>Probar en el navegador o herramienta API:</strong> (Ej: Postman, Insomnia).</li>
+                </ul>
+                <p>¡Esperamos que este curso te haya sido útil! Sigue explorando y construyendo. El desarrollo de APIs es una habilidad muy demandada y divertida.</p>
+            </section>
+        </main>
+
+        <nav class="navigation">
+            <button id="prevBtn" class="nav-button" onclick="navigate(-1)">Anterior</button>
+            <button id="nextBtn" class="nav-button" onclick="navigate(1)">Siguiente</button>
+        </nav>
+    </div>
+
+    <script>
+        let currentStep = 0;
+        const steps = document.querySelectorAll('.step');
+        const totalSteps = steps.length;
+        const prevButton = document.getElementById('prevBtn');
+        const nextButton = document.getElementById('nextBtn');
+
+        function showStep(stepIndex) {
+            steps.forEach((step, index) => {
+                step.classList.toggle('active', index === stepIndex);
+            });
+
+            // Actualizar estado de los botones
+            prevButton.disabled = (stepIndex === 0);
+            nextButton.disabled = (stepIndex === totalSteps - 1);
+            
+            // Cambiar texto del botón "Siguiente" en el penúltimo paso
+            if (stepIndex === totalSteps - 2) { // Penúltimo paso (antes del resumen)
+                 nextButton.textContent = 'Ver Resumen Final';
+            } else if (stepIndex === totalSteps - 1) { // Último paso (resumen)
+                 nextButton.textContent = 'Fin';
+            }
+            else {
+                 nextButton.textContent = 'Siguiente';
+            }
+        }
+
+        function navigate(direction) {
+            currentStep += direction;
+            if (currentStep < 0) {
+                currentStep = 0;
+            } else if (currentStep >= totalSteps) {
+                currentStep = totalSteps - 1;
+            }
+            showStep(currentStep);
+            window.scrollTo(0, 0); // Scroll al inicio de la página al cambiar de paso
+        }
+
+        // Inicializar el primer paso
+        document.addEventListener('DOMContentLoaded', () => {
+            showStep(currentStep);
+        });
+    </script>
+
+</body>
+</html>
