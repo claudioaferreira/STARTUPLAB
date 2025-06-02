@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Certificado de Participación - Startup Lab</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #e9eef2; /* Un fondo suave para la página */
+      display: flex;
+      flex-direction: column; /* Para alinear el botón debajo */
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .certificate-container {
+      background-color: #fff;
+      border: 3px solid #1dbfaf; /* Color turquesa del borde y título */
+      border-radius: 15px;
+      padding: 30px 40px; /* Más padding */
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      width: 100%;
+      max-width: 650px; /* Ancho del certificado */
+      position: relative; /* Para elementos decorativos si se añaden */
+    }
+
+    .certificate-logo {
+      width: 100px; /* Ajusta según tu logo real */
+      margin-bottom: 15px;
+    }
+
+    .main-title {
+      color: #1dbfaf; /* Color turquesa */
+      font-family: 'Montserrat', sans-serif;
+      font-size: 26px; /* Tamaño ajustado */
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-top: 0;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 18px;
+      color: #333;
+      margin-top: 0;
+      margin-bottom: 25px;
+    }
+
+    .participant-name-label {
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 5px;
+    }
+
+    .participant-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: #222;
+      margin-top: 0;
+      margin-bottom: 20px;
+      line-height: 1.2;
+      word-wrap: break-word;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+        gap: 10px 20px; /* Espacio entre filas y columnas */
+        text-align: left;
+        font-size: 13px;
+        color: #444;
+        margin-bottom: 20px;
+        padding: 15px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+    }
+
+    .info-grid p {
+        margin: 5px 0;
+        word-wrap: break-word;
+    }
+
+    .info-grid strong {
+        color: #111;
+        min-width: 90px; /* Para alinear un poco los dos puntos */
+        display: inline-block;
+    }
+
+
+    .date-location {
+      font-size: 14px;
+      color: #555;
+      margin-top: 25px;
+      margin-bottom: 25px;
+    }
+    
+    .date-location span {
+        font-weight: 500;
+        color: #333;
+    }
+
+    .qr-section {
+      margin-top: 20px;
+      margin-bottom: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .qr-section p {
+        font-size: 13px;
+        color: #555;
+        margin:0;
+    }
+
+    .qr-section img {
+      width: 110px; /* Tamaño del QR */
+      height: 110px;
+      border: 1px solid #ddd;
+      padding: 4px;
+      background-color: #fff;
+    }
+
+    .signature-section {
+      display: flex;
+      justify-content: space-around; /* Espacio entre las firmas */
+      margin-top: 35px;
+      padding-top: 20px;
+      border-top: 1px dashed #ccc; /* Línea separadora sutil */
+    }
+
+    .signature-line {
+      width: 40%; /* Ancho de cada bloque de firma */
+      text-align: center;
+      font-size: 12px;
+      color: #666;
+    }
+
+    .signature-line hr {
+      border: 0;
+      border-top: 1px solid #555;
+      margin-bottom: 8px;
+    }
+
+    .download-button {
+      margin-top: 25px;
+      padding: 12px 30px;
+      font-size: 16px;
+      font-weight: 500;
+      color: #fff;
+      background-color: #1dbfaf; /* Botón con el color principal */
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 10px rgba(29, 191, 175, 0.4);
+    }
+
+    .download-button:hover {
+      background-color: #18a08f; /* Un poco más oscuro al pasar el mouse */
+      transform: translateY(-2px);
+    }
+
+    /* Estilos para N/A para que no sea tan prominente */
+    .na-value {
+        font-style: italic;
+        color: #888;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="certificate-container" id="certificateToDownload">
+    <img src="/img/LOGO.png" alt="Startup Lab Logo" class="certificate-logo" />
+
+    <h1 class="main-title">Certificado de Participación</h1>
+    <h2 class="subtitle">Otorgado a:</h2>
+    
+    <p class="participant-name"><span id="nombre">[Nombre del Participante]</span></p>
+
+    <div class="info-grid">
+      <p><strong>Cédula:</strong> <span id="cedula"></span></p>
+      <p><strong>Correo:</strong> <span id="email"></span></p>
+      <p><strong>Teléfono:</strong> <span id="telefono"></span></p>
+      <p><strong>Carrera:</strong> <span id="carrera"></span></p>
+      <p><strong>Edad:</strong> <span id="edad"></span></p>
+      <p><strong>GitHub/Portafolio:</strong> <span id="github"></span></p>
+      <p><strong>Idea de Negocio:</strong> <span id="idea"></span></p>
+      <p><strong>Descripción:</strong> <span id="idea_descripcion"></span></p>
+      <p><strong>Perfil:</strong> <span id="perfil"></span></p>
+    </div>
+    
+    <div class="qr-section">
+        <p>Valida esta credencial escaneando el código:</p>
+        <img id="qr" src="" alt="Código QR de Validación" />
+    </div>
+
+    <p class="date-location">
+      Emitido el <span id="fecha_emision">[dd de mes de 2025]</span> en <span id="lugar_emision">[Ciudad, País]</span>
+    </p>
+
+    <div class="signature-section">
+      <div class="signature-line">
+        <hr />
+        Nombre del representante 1
+      </div>
+      <div class="signature-line">
+        <hr />
+        Nombre del representante 2
+      </div>
+    </div>
+  </div>
+
+  <button class="download-button" onclick="descargarCertificado()">Descargar Certificado</button>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+
+    // Lista de campos a popular
+    const fields = [
+      'nombre', 'cedula', 'email', 'telefono', 
+      'carrera', 'edad', 'github', 'idea', 
+      'idea_descripcion', 'perfil'
+    ];
+
+    fields.forEach(field => {
+      const el = document.getElementById(field);
+      if (el) {
+        let value = params.get(field);
+        if (!value || value.trim() === '') {
+          value = 'N/A';
+          el.classList.add('na-value'); // Añade clase para estilizar N/A
+        } else {
+          el.classList.remove('na-value');
+        }
+        el.textContent = value;
+      }
+    });
+
+    // Para los campos de fecha y lugar del certificado (puedes hacerlos dinámicos también si quieres)
+    // Por ahora, usaré los placeholders de la imagen si no vienen en la URL
+    document.getElementById('fecha_emision').textContent = params.get('fecha_emision') || '[dd de mes de 2025]';
+    document.getElementById('lugar_emision').textContent = params.get('lugar_emision') || '[Ciudad, País]';
+
+
+    // Crear texto para el QR (más estructurado y legible si se escanea y muestra como texto)
+    // Incluye solo los datos relevantes que quieres en el QR
+    let qrTextParts = [];
+    fields.forEach(field => {
+        const value = params.get(field) || 'N/A';
+        // Solo añade al QR si no es N/A o si quieres incluirlo explícitamente
+        if (value !== 'N/A' || ['nombre', 'cedula', 'email'].includes(field)) { // Ejemplo: siempre incluir nombre, cedula, email
+             qrTextParts.push(`${field.charAt(0).toUpperCase() + field.slice(1).replace('_', ' ')}: ${value}`);
+        }
+    });
+    const qrText = qrTextParts.join('; ').trim();
+
+
+    // Generar el QR con la API
+    if (qrText) {
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(qrText)}&margin=1`;
+      document.getElementById('qr').src = qrUrl;
+    } else {
+      document.getElementById('qr').alt = "No hay datos para generar QR";
+    }
+    
+
+    function descargarCertificado() {
+      const certificate = document.getElementById('certificateToDownload');
+      const downloadButton = document.querySelector('.download-button');
+      
+      // Ocultar temporalmente el botón para que no aparezca en la captura
+      downloadButton.style.display = 'none';
+
+      html2canvas(certificate, {
+        scale: 2, // Aumentar la escala para mejor calidad de imagen
+        useCORS: true, // Si el logo es de un dominio externo
+        onclone: (document) => {
+          // Puedes hacer ajustes al DOM clonado justo antes de renderizar si es necesario
+        }
+      }).then(canvas => {
+        const enlace = document.createElement('a');
+        const nombreParticipante = params.get('nombre') || 'participante';
+        enlace.download = `Certificado_${nombreParticipante.replace(/\s+/g, '_')}.png`;
+        enlace.href = canvas.toDataURL('image/png');
+        enlace.click();
+        
+        // Mostrar el botón de nuevo
+        downloadButton.style.display = 'block';
+      }).catch(err => {
+        console.error("Error al generar la imagen:", err);
+        // Mostrar el botón de nuevo en caso de error
+        downloadButton.style.display = 'block';
+      });
+    }
+  </script>
+</body>
+</html>

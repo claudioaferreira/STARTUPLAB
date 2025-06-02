@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error("Formulario no encontrado.");
         return;
     }
-
+/*
     form.addEventListener('submit', async function (e) {
         alert("Intercepción del formulario exitosa");
         e.preventDefault();
@@ -61,5 +61,5 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error al enviar:', error);
             alert("Error al conectar con el servidor.");
         }
-    });
+    });*/
 });
