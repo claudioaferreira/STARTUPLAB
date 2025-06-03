@@ -4,151 +4,14 @@
   <meta charset="UTF-8" />
   <title>Certificado de Participación - Startup Lab</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <style>
-    /* Contenedor del certificado - tamaño horizontal tipo papel */
-    .certificate-container {
-      width: 1123px;  /* Ancho A4 horizontal aprox en px */
-      height: 794px;  /* Alto A4 horizontal aprox en px */
-      padding: 30px 50px;
-      border: 3px solid #333;
-      border-radius: 10px;
-      background: #fff;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #222;
-      position: relative;
-      margin: 10px auto;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .certificate-logo {
-      width: 300px;
-      display: block;
-      margin: 0 auto 5px auto;
-    }
-
-    .main-title {
-      text-align: center;
-      font-size: 2.8rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      margin-bottom: 1px;
-    }
-
-    .subtitle {
-      text-align: center;
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-      color: #555;
-    }
-
-    /* Nuevo bloque para reconocimiento */
-    .certificate-content {
-      text-align: center;
-      margin: 0 0 10px 0;
-      font-size: 1.25rem;
-      color: #333;
-      line-height: 1.4;
-    }
-
-    .recognition-text {
-      margin: 5px 0;
-      font-style: italic;
-    }
-
-    .participant-name {
-      font-size: 2rem;
-      font-weight: 700;
-      margin: 10px 0 20px 0;
-      color: #0056b3;
-    }
-.qr-section {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
-  font-size: 0.9rem;
-  color: #666;
-}
-
-.qr-section p {
-  margin: 0;
-}
-
-    .qr-section img {
-      margin-top: 5px;
-      width: 120px;
-      height: 120px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      background: #fff;
-    }
-
-    .date-location {
-      text-align: center;
-      font-size: 1rem;
-      color: #555;
-      margin-bottom: 30px;
-      /* Ajuste para que quede dentro del marco */
-      padding: 0 20px;
-    }
-
-    .signature-section {
-      display: flex;
-      justify-content: space-around;
-      padding: 0 40px;
-      margin-bottom: 10px;
-    }
-
-    .signature-line {
-      text-align: center;
-      width: 40%;
-      font-size: 1rem;
-      color: #333;
-    }
-
-    .signature-line hr {
-      border: 1px solid #333;
-      margin-bottom: 8px;
-    }
-
-    /* Botón para descargar */
-    .download-button {
-      display: block;
-      margin: 20px auto 40px auto; /* espacio abajo para no pegarse al borde */
-      padding: 12px 30px;
-      font-size: 1rem;
-      font-weight: 600;
-      color: #fff;
-      background-color: #0056b3;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      width: max-content;
-    }
-
-    .download-button:hover {
-      background-color: #003d80;
-    }
-
-    /* Estilo para valores N/A */
-    .na-value {
-      color: #999;
-      font-style: italic;
-    }
-  </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="certificate-container" id="certificateToDownload">
     <img src="/img/LOGO.png" alt="Startup Lab Logo" class="certificate-logo" />
 
     <h1 class="main-title">Certificado de Participación</h1>
-    <h2 class="subtitle">Otorgado a:</h2>
+
 
     <div class="certificate-content">
       <p class="recognition-text">
@@ -158,14 +21,13 @@
       <p class="participant-name"><span id="nombre">[Nombre del Participante]</span></p>
 
       <p class="recognition-text">
-        Por su valiosa participación en el evento "Startup Lab", demostrando un compromiso excepcional
+        Por su valiosa participación en el evento <b>"Startup Lab"</b>, demostrando un compromiso excepcional
         y contribuyendo activamente al éxito de esta iniciativa.
       </p>
     </div>
 
 <div class="qr-section">
-  <p>Valida esta credencial escaneando el código:</p>
-  <img id="qr" src="" alt="Código QR de Validación" />
+   <img id="qr" src="" alt="Código QR de Validación" />
 </div>
 
     <p class="date-location">
@@ -173,80 +35,19 @@
     </p>
 
     <div class="signature-section">
-      <div class="signature-line">
-        <hr />
-        Nombre del representante 1
-      </div>
-      <div class="signature-line">
-        <hr />
-        Nombre del representante 2
-      </div>
-    </div>
+      
+   <div class="signature-section">
+  <div class="signature-line">
+    <img src="/img/firma.png" alt="Firma de Lic. Claudio A. Ferreira" class="signature-image" />
+    <hr />
+    <div>Lic. Claudio A. Ferreira<br><small>Coordinador General</small></div>
+  </div>
+</div>
   </div>
 
   <button class="download-button" onclick="descargarCertificado()">Descargar Certificado</button>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script>
-    const params = new URLSearchParams(window.location.search);
-
-    const fields = ['nombre', 'cedula', 'email'];
-
-    fields.forEach(field => {
-      const el = document.getElementById(field);
-      if (el) {
-        let value = params.get(field);
-        if (!value || value.trim() === '') {
-          value = 'N/A';
-          el.classList.add('na-value');
-        } else {
-          el.classList.remove('na-value');
-        }
-        el.textContent = value;
-      }
-    });
-
-    // Fecha y lugar (pueden venir en URL o usar placeholders)
-    document.getElementById('fecha_emision').textContent = params.get('fecha_emision') || '[dd de mes de 2025]';
-    document.getElementById('lugar_emision').textContent = params.get('lugar_emision') || '[Ciudad, País]';
-
-    // Generar texto para QR
-    let qrTextParts = [];
-    fields.forEach(field => {
-      const value = params.get(field) || 'N/A';
-      if (value !== 'N/A' || ['nombre', 'cedula', 'email'].includes(field)) {
-        qrTextParts.push(`${field.charAt(0).toUpperCase() + field.slice(1).replace('_', ' ')}: ${value}`);
-      }
-    });
-    const qrText = qrTextParts.join('; ').trim();
-
-    if (qrText) {
-      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(qrText)}&margin=1`;
-      document.getElementById('qr').src = qrUrl;
-    } else {
-      document.getElementById('qr').alt = "No hay datos para generar QR";
-    }
-
-    function descargarCertificado() {
-      const certificate = document.getElementById('certificateToDownload');
-      const downloadButton = document.querySelector('.download-button');
-      downloadButton.style.display = 'none';
-
-      html2canvas(certificate, {
-        scale: 2,
-        useCORS: true,
-      }).then(canvas => {
-        const enlace = document.createElement('a');
-        const nombreParticipante = params.get('nombre') || 'participante';
-        enlace.download = `Certificado_${nombreParticipante.replace(/\s+/g, '_')}.png`;
-        enlace.href = canvas.toDataURL('image/png');
-        enlace.click();
-        downloadButton.style.display = 'block';
-      }).catch(err => {
-        console.error("Error al generar la imagen:", err);
-        downloadButton.style.display = 'block';
-      });
-    }
-  </script>
+    <script src="script.js" defer></script>
 </body>
 </html>

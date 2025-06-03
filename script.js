@@ -63,3 +63,73 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });*/
 });
+
+
+ const params = new URLSearchParams(window.location.search);
+
+    const today = new Date();
+    const ciudad = 'Santo Domingo'; // Puedes cambiar esto si es necesario
+    const pais = 'República Dominicana'; // Puedes cambiar esto si es necesario
+
+    const fields = ['nombre', 'cedula', 'email'];
+
+    fields.forEach(field => {
+      const el = document.getElementById(field);
+      if (el) {
+        let value = params.get(field);
+        if (!value || value.trim() === '') {
+          value = 'N/A';
+          el.classList.add('na-value');
+        } else {
+          el.classList.remove('na-value');
+        }
+        el.textContent = value;
+      }
+    });
+
+    // Fecha y lugar (pueden venir en URL o usar placeholders)
+    document.getElementById('fecha_emision').textContent = today.toLocaleDateString('es-ES', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+    document.getElementById('lugar_emision').textContent = (params.get('lugar_emision') || `${ciudad}, ${pais}`).trim();
+
+    // Generar texto para QR
+    let qrTextParts = [];
+    fields.forEach(field => {
+      const value = params.get(field) || 'N/A';
+      if (value !== 'N/A' || ['nombre', 'cedula', 'email'].includes(field)) {
+        qrTextParts.push(`${field.charAt(0).toUpperCase() + field.slice(1).replace('_', ' ')}: ${value}`);
+      }
+    });
+    const qrText = qrTextParts.join('; ').trim();
+
+    if (qrText) {
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(qrText)}&size=120x120&margin=1`;
+
+      document.getElementById('qr').src = qrUrl;
+    } else {
+      document.getElementById('qr').alt = "No hay datos para generar QR";
+    }
+
+    function descargarCertificado() {
+      const certificate = document.getElementById('certificateToDownload');
+      const downloadButton = document.querySelector('.download-button');
+      downloadButton.style.display = 'none';
+
+      html2canvas(certificate, {
+        scale: 2,
+        useCORS: true,
+      }).then(canvas => {
+        const enlace = document.createElement('a');
+        const nombreParticipante = params.get('nombre') || 'participante';
+        enlace.download = `Certificado_${nombreParticipante.replace(/\s+/g, '_')}.png`;
+        enlace.href = canvas.toDataURL('image/png');
+        enlace.click();
+        downloadButton.style.display = 'block';
+      }).catch(err => {
+        console.error("Error al generar la imagen:", err);
+        downloadButton.style.display = 'block';
+      });
+    }
